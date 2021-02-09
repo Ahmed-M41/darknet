@@ -97,8 +97,9 @@ def drawing(frame_queue, detections_queue, fps_queue):
         detections = detections_queue.get()
         fps = fps_queue.get()
         if frame_resized is not None:
-            image = darknet.draw_boxes(detections, frame_resized, class_colors)
+            image , count = darknet.draw_boxes(detections, frame_resized, class_colors)
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            cv2.putText(image, "Total users : " + "{}".format(count), (200, 65), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255),3)
             if args.out_filename is not None:
                 video.write(image)
             if not args.dont_show:
